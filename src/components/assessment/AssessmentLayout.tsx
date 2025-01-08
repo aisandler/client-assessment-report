@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import ExecutiveSummary from './content/ExecutiveSummary';
 import KeyRecommendations from './content/key-recommendations';
+import ServiceDeliveryAssessment from './content/service-delivery-assessment';
+import ServiceAnalysisDetail from './content/service-analysis-detail';
+import PerformanceAnalysis from './content/performance-analysis';
 import Image from 'next/image';
 
 // Start with simplified navigation
@@ -12,6 +15,23 @@ const navigation = [
       { title: "Assessment Overview", id: "overview" },
       { title: "Critical Findings", id: "findings" },
       { title: "Key Recommendations", id: "recommendations" }
+    ]
+  },
+  {
+    title: "Agency Assessment",
+    id: "agency-assessment",
+    children: [
+      { 
+        title: "Service Delivery", 
+        id: "service-delivery",
+        children: [
+          { title: "Overview", id: "service-delivery" },
+          { title: "Service Delivery Detail", id: "service-delivery-detail" }
+        ]
+      },
+      { title: "Performance Analysis", id: "performance" },
+      { title: "Communication", id: "communication" },
+      { title: "Collaboration", id: "collaboration" }
     ]
   }
 ];
@@ -30,6 +50,16 @@ export const AssessmentLayout = () => {
         return <ExecutiveSummary activeTab={activeSection} onTabChange={handleNavClick} />;
       case 'recommendations':
         return <KeyRecommendations activeTab={activeSection} onTabChange={handleNavClick} />;
+      case 'service-delivery':
+        return <ServiceDeliveryAssessment />;
+      case 'service-delivery-detail':
+        return <ServiceAnalysisDetail />;
+      case 'performance':
+        return <PerformanceAnalysis />;
+      case 'communication':
+        return <Communication />;
+      case 'collaboration':
+        return <Collaboration />;
       default:
         return null;
     }
@@ -68,17 +98,48 @@ export const AssessmentLayout = () => {
               </div>
               <div className="ml-4">
                 {section.children.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => handleNavClick(item.id)}
-                    className={`w-full text-left px-4 py-2 text-sm ${
-                      activeSection === item.id
-                        ? 'bg-blue-50 text-blue-600'
-                        : 'text-gray-600 hover:bg-gray-50'
-                    }`}
-                  >
-                    {item.title}
-                  </button>
+                  <div key={item.id}>
+                    {item.children ? (
+                      <>
+                        <button
+                          onClick={() => handleNavClick(item.id)}
+                          className={`w-full text-left px-4 py-2 text-sm ${
+                            activeSection === item.id
+                              ? 'bg-blue-50 text-blue-600'
+                              : 'text-gray-600 hover:bg-gray-50'
+                          }`}
+                        >
+                          {item.title}
+                        </button>
+                        <div className="ml-4">
+                          {item.children.map((subItem) => (
+                            <button
+                              key={subItem.id}
+                              onClick={() => handleNavClick(subItem.id)}
+                              className={`w-full text-left px-4 py-2 text-sm ${
+                                activeSection === subItem.id
+                                  ? 'bg-blue-50 text-blue-600'
+                                  : 'text-gray-600 hover:bg-gray-50'
+                              }`}
+                            >
+                              {subItem.title}
+                            </button>
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      <button
+                        onClick={() => handleNavClick(item.id)}
+                        className={`w-full text-left px-4 py-2 text-sm ${
+                          activeSection === item.id
+                            ? 'bg-blue-50 text-blue-600'
+                            : 'text-gray-600 hover:bg-gray-50'
+                        }`}
+                      >
+                        {item.title}
+                      </button>
+                    )}
+                  </div>
                 ))}
               </div>
             </div>
