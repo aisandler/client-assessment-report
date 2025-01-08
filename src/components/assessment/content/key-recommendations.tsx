@@ -8,8 +8,43 @@ interface KeyRecommendationsProps {
   onTabChange: (tabId: string) => void;
 }
 
-const StatusBadge = ({ status }) => {
-  // ... your existing StatusBadge component ...
+interface StatusBadgeProps {
+  status: 'CRITICAL' | 'HIGH PRIORITY' | string;
+}
+
+const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
+  const getStatusStyles = () => {
+    switch (status) {
+      case 'CRITICAL':
+        return {
+          bg: 'bg-red-100',
+          text: 'text-red-800',
+          icon: AlertTriangle
+        };
+      case 'HIGH PRIORITY':
+        return {
+          bg: 'bg-amber-100',
+          text: 'text-amber-800',
+          icon: AlertCircle
+        };
+      default:
+        return {
+          bg: 'bg-gray-100',
+          text: 'text-gray-800',
+          icon: AlertCircle
+        };
+    }
+  };
+
+  const styles = getStatusStyles();
+  const Icon = styles.icon;
+
+  return (
+    <div className={`flex items-center gap-2 px-3 py-1 rounded-full ${styles.bg} ${styles.text} text-sm font-semibold`}>
+      <Icon size={16} />
+      <span>{status}</span>
+    </div>
+  );
 };
 
 const KeyRecommendations: React.FC<KeyRecommendationsProps> = ({ 
