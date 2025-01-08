@@ -1,157 +1,91 @@
 import React, { useState } from 'react';
-import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react';
-import { Card } from '@/components/ui/card';
+import ExecutiveSummary from './content/ExecutiveSummary';
+import KeyRecommendations from './content/key-recommendations';
 
-const NavigationItem = ({ item, level = 0, activeSection, onSelect }) => {
-  const [isExpanded, setIsExpanded] = useState(level === 0);
-  const hasChildren = item.children && item.children.length > 0;
-  const isActive = activeSection === item.id;
-  
-  const handleClick = () => {
-    if (hasChildren) {
-      setIsExpanded(!isExpanded);
+// Start with simplified navigation
+const navigation = [
+  {
+    title: "Executive Summary",
+    id: "executive-summary",
+    children: [
+      { title: "Assessment Overview", id: "overview" },
+      { title: "Critical Findings", id: "findings" },
+      { title: "Key Recommendations", id: "recommendations" }
+    ]
+  }
+];
+
+export const AssessmentLayout = () => {
+  const [activeSection, setActiveSection] = useState('overview');
+
+  const handleNavClick = (sectionId: string) => {
+    setActiveSection(sectionId);
+  };
+
+  const renderContent = () => {
+    switch (activeSection) {
+      case 'overview':
+      case 'findings':
+        return <ExecutiveSummary activeTab={activeSection} onTabChange={handleNavClick} />;
+      case 'recommendations':
+        return <KeyRecommendations activeTab={activeSection} onTabChange={handleNavClick} />;
+      default:
+        return null;
     }
-    onSelect(item.id);
   };
 
   return (
-    <div className="w-full">
-      <button
-        onClick={handleClick}
-        className={`w-full text-left flex items-center px-4 py-2 hover:bg-gray-50 transition-colors duration-200
-          ${isActive ? 'bg-blue-50 text-blue-700 font-medium' : 'text-gray-700'}
-          ${level > 0 ? 'pl-' + (level * 4 + 4) : ''}`}
-      >
-        {hasChildren && (
-          <span className="mr-2">
-            {isExpanded ? (
-              <ChevronDown className="h-4 w-4" />
-            ) : (
-              <ChevronRight className="h-4 w-4" />
-            )}
-          </span>
-        )}
-        <span className="truncate">{item.title}</span>
-      </button>
-      
-      {hasChildren && isExpanded && (
-        <div className="mt-1">
-          {item.children.map((child) => (
-            <NavigationItem
-              key={child.id}
-              item={child}
-              level={level + 1}
-              activeSection={activeSection}
-              onSelect={onSelect}
-            />
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
-
-const Navigation = ({ activeSection, onSectionChange }) => {
-  const navigationStructure = [
-    {
-      id: 'executive-summary',
-      title: 'Executive Summary',
-      children: [
-        { id: 'overview', title: 'Assessment Overview' },
-        { id: 'critical-findings', title: 'Critical Findings' },
-        { id: 'recommendations', title: 'Key Recommendations' }
-      ]
-    },
-    {
-      id: 'current-state',
-      title: 'Current State Assessment',
-      children: [
-        {
-          id: 'digital-maturity',
-          title: 'Digital Maturity',
-          children: [
-            { id: 'strategy-maturity', title: 'Strategy & Vision' },
-            { id: 'operational-maturity', title: 'Operational Execution' },
-            { id: 'technology-maturity', title: 'Technology & Infrastructure' }
-          ]
-        },
-        {
-          id: 'agency-assessment',
-          title: 'Agency Partnership',
-          children: [
-            { id: 'technical-context', title: 'Technical Context' },
-            { id: 'service-evaluation', title: 'Service Evaluation' },
-            { id: 'transition-planning', title: 'Transition Planning' }
-          ]
-        }
-      ]
-    }
-  ];
-
-  return (
-    <nav className="w-64 border-r bg-white overflow-y-auto">
-      <div className="sticky top-0 bg-white border-b px-4 py-3">
-        <h2 className="font-semibold text-gray-900">Digital Marketing Assessment</h2>
-      </div>
-      <div className="py-2">
-        {navigationStructure.map((item) => (
-          <NavigationItem
-            key={item.id}
-            item={item}
-            activeSection={activeSection}
-            onSelect={onSectionChange}
+    <div className="flex flex-col h-screen">
+      {/* Header */}
+      <header className="flex items-center justify-between px-6 py-4 border-b">
+        <div className="flex items-center gap-3">
+          <img
+            src="/econoco-logo.png"
+            alt="Econoco"
+            className="h-8 w-auto object-contain"
+            style={{ maxWidth: '180px' }}
           />
-        ))}
-      </div>
-    </nav>
-  );
-};
-
-const AssessmentLayout = () => {
-  const [isMenuVisible, setIsMenuVisible] = useState(true);
-  const [activeSection, setActiveSection] = useState('executive-summary');
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b sticky top-0 z-50">
-        <div className="flex items-center justify-between px-4 py-3">
-          <div className="flex items-center">
-            <button
-              onClick={() => setIsMenuVisible(!isMenuVisible)}
-              className="p-2 hover:bg-gray-100 rounded-lg mr-2"
-            >
-              {isMenuVisible ? (
-                <X className="h-5 w-5 text-gray-600" />
-              ) : (
-                <Menu className="h-5 w-5 text-gray-600" />
-              )}
-            </button>
-            <h1 className="text-xl font-semibold text-gray-900">
-              Econoco Digital Marketing Assessment
-            </h1>
-          </div>
+          <h1 className="text-xl font-semibold text-gray-900">
+            Digital Marketing Assessment
+          </h1>
+        </div>
+        <div className="text-gray-600 font-medium">
+          Sandler Digital Advisory
         </div>
       </header>
 
-      <div className="flex min-h-[calc(100vh-56px)]">
-        {isMenuVisible && (
-          <aside className="w-64 flex-shrink-0">
-            <Navigation
-              activeSection={activeSection}
-              onSectionChange={setActiveSection}
-            />
-          </aside>
-        )}
-        
-        <main className={`flex-1 transition-all duration-200 ${
-          isMenuVisible ? 'ml-64' : 'ml-0'
-        }`}>
-          <div className="max-w-4xl mx-auto px-6 py-8">
-            <Card className="p-6">
-              Content for section: {activeSection}
-            </Card>
-          </div>
-        </main>
+      {/* Main Content */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* Navigation Sidebar */}
+        <div className="w-64 border-r bg-gray-50 overflow-y-auto">
+          {navigation.map((section) => (
+            <div key={section.id} className="py-2">
+              <div className="px-4 py-2 font-medium text-gray-700">
+                {section.title}
+              </div>
+              <div className="ml-4">
+                {section.children.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => handleNavClick(item.id)}
+                    className={`w-full text-left px-4 py-2 text-sm ${
+                      activeSection === item.id
+                        ? 'bg-blue-50 text-blue-600'
+                        : 'text-gray-600 hover:bg-gray-50'
+                    }`}
+                  >
+                    {item.title}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Content Area */}
+        <div className="flex-1 overflow-auto p-6">
+          {renderContent()}
+        </div>
       </div>
     </div>
   );
