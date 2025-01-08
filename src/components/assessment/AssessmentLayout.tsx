@@ -4,6 +4,8 @@ import KeyRecommendations from './content/key-recommendations';
 import ServiceDeliveryAssessment from './content/service-delivery-assessment';
 import ServiceAnalysisDetail from './content/service-analysis-detail';
 import PerformanceAnalysis from './content/performance-analysis';
+import CommunicationAssessment from './content/communication-assessment';
+import InternalAssessment from './content/internal-assessment';
 import Image from 'next/image';
 
 // Start with simplified navigation
@@ -15,6 +17,13 @@ const navigation = [
       { title: "Assessment Overview", id: "overview" },
       { title: "Critical Findings", id: "findings" },
       { title: "Key Recommendations", id: "recommendations" }
+    ]
+  },
+  {
+    title: "Internal Assessment",
+    id: "internal-assessment",
+    children: [
+      { title: "Internal Assessment", id: "internal" }
     ]
   },
   {
@@ -30,8 +39,7 @@ const navigation = [
         ]
       },
       { title: "Performance Analysis", id: "performance" },
-      { title: "Communication", id: "communication" },
-      { title: "Collaboration", id: "collaboration" }
+      { title: "Communication", id: "communication" }
     ]
   }
 ];
@@ -44,22 +52,24 @@ export const AssessmentLayout = () => {
   };
 
   const renderContent = () => {
+    console.log('Current activeSection:', activeSection);
     switch (activeSection) {
       case 'overview':
       case 'findings':
         return <ExecutiveSummary activeTab={activeSection} onTabChange={handleNavClick} />;
       case 'recommendations':
         return <KeyRecommendations activeTab={activeSection} onTabChange={handleNavClick} />;
+      case 'internal':
+        return <InternalAssessment />;
       case 'service-delivery':
         return <ServiceDeliveryAssessment />;
       case 'service-delivery-detail':
         return <ServiceAnalysisDetail />;
       case 'performance':
         return <PerformanceAnalysis />;
-      // case 'communication':
-      //   return <Communication />;  // Commented out until implemented
-      // case 'collaboration':
-      //   return <Collaboration />;  // Commented out until implemented
+      case 'communication':
+        console.log('Rendering CommunicationAssessment');
+        return <CommunicationAssessment />;
       default:
         return null;
     }
