@@ -9,7 +9,7 @@ const TestComponent = () => {
         <div className="grid grid-cols-2 gap-8">
           <div className="bg-gray-50 p-6 rounded">
             <h3 className="text-xl text-blue-700 mb-4">Current Partnership State</h3>
-            <p className="mb-3">AWG's 12-year relationship encompasses management of five brand websites with a total annual investment of $360,240. The partnership delivers basic advertising services and website maintenance, operating primarily in a maintenance capacity rather than driving strategic growth.</p>
+            <p className="mb-3">AWG&apos;s 12-year relationship encompasses management of five brand websites with a total annual investment of $360,240. The partnership delivers basic advertising services and website maintenance, operating primarily in a maintenance capacity rather than driving strategic growth.</p>
             
             <div className="mt-4 p-3 bg-white rounded">
               <h4 className="font-semibold mb-2">Key Metrics</h4>

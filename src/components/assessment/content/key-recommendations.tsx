@@ -8,11 +8,7 @@ interface KeyRecommendationsProps {
   onTabChange: (tabId: string) => void;
 }
 
-interface StatusBadgeProps {
-  status: 'CRITICAL' | 'HIGH PRIORITY' | string;
-}
-
-const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
+const StatusBadge = ({ status }) => {
   const getStatusStyles = () => {
     switch (status) {
       case 'CRITICAL':
@@ -57,6 +53,7 @@ const KeyRecommendations: React.FC<KeyRecommendationsProps> = ({
     { id: 'recommendations', title: 'Key Recommendations' }
   ];
 
+  // Render different content based on activeTab
   const renderTabContent = () => {
     switch (activeTab) {
       case 'overview':
@@ -66,7 +63,7 @@ const KeyRecommendations: React.FC<KeyRecommendationsProps> = ({
               <CardTitle>Assessment Overview</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600">Overview content goes here...</p>
+              {/* Overview content */}
             </CardContent>
           </Card>
         );
@@ -77,7 +74,7 @@ const KeyRecommendations: React.FC<KeyRecommendationsProps> = ({
               <CardTitle>Critical Findings</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600">Findings content goes here...</p>
+              {/* Findings content */}
             </CardContent>
           </Card>
         );
@@ -86,7 +83,7 @@ const KeyRecommendations: React.FC<KeyRecommendationsProps> = ({
         return (
           <div className="space-y-6">
             <Card className="border-t-4 border-t-blue-600">
-              <CardHeader className="bg-gradient-to-r from-gray-50 to-white border-b pb-3">
+              <CardHeader className="bg-gradient-to-r from-gray-50 to-white border-b">
                 <RichTextEditor
                   initialContent="Key Recommendations"
                   sectionId="key-recommendations-title"
@@ -95,13 +92,13 @@ const KeyRecommendations: React.FC<KeyRecommendationsProps> = ({
                 <RichTextEditor
                   initialContent="Establishing the foundation for digital marketing transformation"
                   sectionId="key-recommendations-subtitle"
-                  className="text-lg text-gray-600 italic mt-1 !p-0"
+                  className="text-lg text-gray-600 italic mt-2 !p-0"
                 />
               </CardHeader>
-              <CardContent className="p-6 space-y-6">
+              <CardContent className="p-6 space-y-8">
                 {/* Agency Partnership Section */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between mb-1">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <Users className="h-6 w-6 text-blue-600" />
                       <RichTextEditor
@@ -112,7 +109,7 @@ const KeyRecommendations: React.FC<KeyRecommendationsProps> = ({
                     </div>
                     <StatusBadge status="CRITICAL" />
                   </div>
-                  <div className="space-y-2 text-gray-700">
+                  <div className="space-y-4 text-gray-700">
                     <RichTextEditor
                       initialContent="Our assessment revealed significant concerns with current agency relationships that require immediate action. Primary focus must be placed on evaluating and enhancing these partnerships to establish proper foundations for future growth."
                       sectionId="agency-partnership-p1"
@@ -132,8 +129,8 @@ const KeyRecommendations: React.FC<KeyRecommendationsProps> = ({
                 </div>
 
                 {/* Marketplace Strategy Section */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between mb-1">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <ShoppingCart className="h-6 w-6 text-blue-600" />
                       <RichTextEditor
@@ -144,7 +141,7 @@ const KeyRecommendations: React.FC<KeyRecommendationsProps> = ({
                     </div>
                     <StatusBadge status="CRITICAL" />
                   </div>
-                  <div className="space-y-2 text-gray-700">
+                  <div className="space-y-4 text-gray-700">
                     <RichTextEditor
                       initialContent="Amazon operations require strategic enhancement to address outdated partnership agreements and missed revenue opportunities. Current content development constraints and buy box competition indicate need for systematic optimization approach."
                       sectionId="marketplace-strategy-p1"
@@ -184,8 +181,8 @@ const KeyRecommendations: React.FC<KeyRecommendationsProps> = ({
                 </div>
 
                 {/* Digital Infrastructure Section */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between mb-1">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <Database className="h-6 w-6 text-blue-600" />
                       <RichTextEditor
@@ -196,7 +193,7 @@ const KeyRecommendations: React.FC<KeyRecommendationsProps> = ({
                     </div>
                     <StatusBadge status="HIGH PRIORITY" />
                   </div>
-                  <div className="space-y-2 text-gray-700">
+                  <div className="space-y-4 text-gray-700">
                     <RichTextEditor
                       initialContent="Data quality and measurement capabilities require immediate attention to support strategic decision-making. Implementation of proper analytics filtering must address current 20-25% bot traffic affecting reporting accuracy."
                       sectionId="digital-infrastructure-p1"
@@ -211,8 +208,8 @@ const KeyRecommendations: React.FC<KeyRecommendationsProps> = ({
                 </div>
 
                 {/* Brand Architecture Section */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between mb-1">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <Building2 className="h-6 w-6 text-blue-600" />
                       <RichTextEditor
@@ -223,7 +220,7 @@ const KeyRecommendations: React.FC<KeyRecommendationsProps> = ({
                     </div>
                     <StatusBadge status="HIGH PRIORITY" />
                   </div>
-                  <div className="space-y-2 text-gray-700">
+                  <div className="space-y-4 text-gray-700">
                     <RichTextEditor
                       initialContent="Current brand structure presents opportunities for enhanced market positioning and operational efficiency. Evaluate potential consolidation of Mondo and Sellutions to strengthen premium positioning while optimizing resources."
                       sectionId="brand-architecture-p1"
@@ -238,8 +235,8 @@ const KeyRecommendations: React.FC<KeyRecommendationsProps> = ({
                 </div>
 
                 {/* Organizational Capability Section */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between mb-1">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <Users className="h-6 w-6 text-blue-600" />
                       <RichTextEditor
@@ -250,7 +247,7 @@ const KeyRecommendations: React.FC<KeyRecommendationsProps> = ({
                     </div>
                     <StatusBadge status="HIGH PRIORITY" />
                   </div>
-                  <div className="space-y-2 text-gray-700">
+                  <div className="space-y-4 text-gray-700">
                     <RichTextEditor
                       initialContent="Integration of trade show marketing (23 shows planned for 2025) with digital capabilities presents significant opportunity. Establish systematic processes for:"
                       sectionId="org-capability-p1"

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ExecutiveSummary from './content/ExecutiveSummary';
 import KeyRecommendations from './content/key-recommendations';
+import Image from 'next/image';
 
 // Start with simplified navigation
 const navigation = [
@@ -39,11 +40,13 @@ export const AssessmentLayout = () => {
       {/* Header */}
       <header className="flex items-center justify-between px-6 py-4 border-b">
         <div className="flex items-center gap-3">
-          <img
+          <Image
             src="/econoco-logo.png"
             alt="Econoco"
             className="h-8 w-auto object-contain"
             style={{ maxWidth: '180px' }}
+            width={180}
+            height={80}
           />
           <h1 className="text-xl font-semibold text-gray-900">
             Digital Marketing Assessment

@@ -212,7 +212,7 @@ const PortfolioAnalysis = () => {
                     <CheckCircle2 className="text-blue-600 mr-2 mt-1" size={16} />
                     <div>
                       <span className="font-medium">Resource Optimization:</span>
-                      <p className="text-gray-600 mt-1">Create unified content development and digital marketing strategy across brands while maintaining Display Dispensary's distinct position</p>
+                      <p className="text-gray-600 mt-1">Create unified content development and digital marketing strategy across brands while maintaining Display Dispensary&apos;s distinct position</p>
                     </div>
                   </div>
                 </div>

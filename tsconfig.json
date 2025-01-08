@@ -28,6 +28,9 @@
     "**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/backup_assessment_report/**",
+    "**/new_assessment_report/**",
+    "**/Content Backup - key recos/**"
   ]
 }

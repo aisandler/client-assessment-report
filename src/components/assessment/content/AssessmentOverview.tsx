@@ -47,10 +47,13 @@ export const AssessmentOverview = () => {
               sectionId="overview-title"
             />
           </CardTitle>
-          <RichTextEditor 
-            initialContent="Establishing the foundation for transforming Econoco's digital marketing capabilities in 2025"
-            className="text-lg text-gray-600 mt-2"
-          />
+          <CardTitle>
+            <RichTextEditor 
+              initialContent="Establishing the foundation for transforming Econoco's digital marketing capabilities in 2025"
+              sectionId="assessment-overview-subtitle"
+              className="text-lg text-gray-600 mt-2"
+            />
+          </CardTitle>
         </CardHeader>
         <CardContent className="pt-8">
           <div className="space-y-8">
@@ -64,6 +67,7 @@ export const AssessmentOverview = () => {
                     opportunities while setting clear priorities for strategic enhancement.
                   </p>
                 `}
+                sectionId="assessment-overview-main"
               />
             </div>
 
@@ -107,6 +111,7 @@ export const AssessmentOverview = () => {
                       of agency partnerships and technology infrastructure.
                     </p>
                   `}
+                  sectionId="assessment-overview-evaluation"
                 />
               </div>
             </div>
@@ -117,6 +122,7 @@ export const AssessmentOverview = () => {
                   <RichTextEditor 
                     initialContent="Strategic Context & Path Forward"
                     className="text-lg font-semibold text-blue-900"
+                    sectionId="assessment-overview-strategic-title"
                   />
                 </h3>
                 <div className="space-y-4">
@@ -136,6 +142,7 @@ export const AssessmentOverview = () => {
                         establish the foundation for future growth.
                       </p>
                     `}
+                    sectionId="assessment-overview-strategic-content"
                   />
                 </div>
               </CardContent>
