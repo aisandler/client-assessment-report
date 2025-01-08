@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { AlertTriangle, DollarSign, BarChart2, Activity } from 'lucide-react';
+import { RichTextEditor } from '@/components/ui/rich-text-editor';
 
 const ServiceDeliveryAssessment = () => {
   const serviceInvestment = [
@@ -67,7 +68,7 @@ const ServiceDeliveryAssessment = () => {
         <CardContent>
           <div className="prose max-w-none">
             <p className="text-gray-600 mb-6">
-              Our comprehensive assessment of AWG's service delivery reveals a concerning pattern of premium 
+              Our comprehensive assessment of AWG&apos;s service delivery reveals a concerning pattern of premium 
               pricing coupled with basic service levels. The agency currently commands fees significantly 
               above industry standards while delivering maintenance-level service across digital marketing 
               and development initiatives.
@@ -158,6 +159,21 @@ const ServiceDeliveryAssessment = () => {
               <li>Limited strategic value from $360,240 annual investment</li>
               <li>Basic service delivery despite premium pricing structure</li>
             </ul>
+          </div>
+
+          <div className="space-y-4">
+            <CardTitle className="text-2xl font-semibold">
+              <RichTextEditor 
+                initialContent="Digital Marketing Maturity Assessment"
+                className="text-2xl font-semibold"
+                sectionId="overview-title"
+              />
+            </CardTitle>
+            <RichTextEditor 
+              initialContent="Establishing the foundation for transforming Econoco&apos;s digital marketing capabilities in 2025"
+              className="text-lg text-gray-600 mt-2"
+              sectionId="assessment-overview"
+            />
           </div>
         </CardContent>
       </Card>

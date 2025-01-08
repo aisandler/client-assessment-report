@@ -80,7 +80,7 @@ const PerformanceAnalysis = () => {
           <div className="prose max-w-none mb-6">
             <p className="text-gray-600">
               Our analysis reveals significant concerns regarding campaign effectiveness, return on 
-              investment, and strategic execution. The agency's approach demonstrates inefficient 
+              investment, and strategic execution. The agency&apos;s approach demonstrates inefficient 
               spending coupled with limited strategic innovation.
             </p>
           </div>

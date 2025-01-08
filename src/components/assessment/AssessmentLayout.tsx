@@ -56,10 +56,10 @@ export const AssessmentLayout = () => {
         return <ServiceAnalysisDetail />;
       case 'performance':
         return <PerformanceAnalysis />;
-      case 'communication':
-        return <Communication />;
-      case 'collaboration':
-        return <Collaboration />;
+      // case 'communication':
+      //   return <Communication />;  // Commented out until implemented
+      // case 'collaboration':
+      //   return <Collaboration />;  // Commented out until implemented
       default:
         return null;
     }

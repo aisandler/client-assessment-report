@@ -103,7 +103,7 @@ const ServiceAnalysisDetail = () => {
         <CardContent>
           <div className="prose max-w-none mb-6">
             <p className="text-gray-600">
-              Despite an annual investment of $156,000, AWG's delivery of SEO and content services 
+              Despite an annual investment of $156,000, AWG&apos;s delivery of SEO and content services 
               demonstrates concerning limitations in both strategic approach and measurable impact.
             </p>
           </div>
@@ -167,7 +167,7 @@ const ServiceAnalysisDetail = () => {
           <div className="prose max-w-none mb-6">
             <p className="text-gray-600">
               The technical development engagement, structured around a monthly 40-hour block at $84,000 
-              annually, reveals a pattern of basic maintenance-level service that impedes Econoco's 
+              annually, reveals a pattern of basic maintenance-level service that impedes Econoco&apos;s 
               digital growth objectives.
             </p>
           </div>
