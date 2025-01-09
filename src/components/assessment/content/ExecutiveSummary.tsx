@@ -1,60 +1,69 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AssessmentOverview from './AssessmentOverview';
+import ProjectSnapshot from './ProjectSnapshot';
 import CriticalFindings from './CriticalFindings';
-import ProjectSummaryPage from './project-summary';
-import KeyRecommendations from './key-recommendations';
+import KeyRecommendations from './KeyRecommendations';
+import SuccessCriteria from './SuccessCriteria';
 
 interface ExecutiveSummaryProps {
   activeTab: string;
-  onTabChange: (tabId: string) => void;
+  onTabChange: (tab: string) => void;
+  showNavigation?: boolean;
 }
 
-const ExecutiveSummary: React.FC<ExecutiveSummaryProps> = ({ 
-  activeTab = 'overview',
-  onTabChange 
+const ExecutiveSummary: React.FC<ExecutiveSummaryProps> = ({
+  activeTab,
+  onTabChange,
+  showNavigation = true
 }) => {
   const tabs = [
     { id: 'overview', title: 'Assessment Overview' },
-    { id: 'project-summary', title: 'Project Summary' },
+    { id: 'project-snapshot', title: 'Project Snapshot' },
+    { id: 'success-criteria', title: 'Success Criteria' },
     { id: 'findings', title: 'Critical Findings' },
     { id: 'recommendations', title: 'Key Recommendations' }
   ];
 
-  const [currentTab, setCurrentTab] = useState(activeTab);
-
-  // Update currentTab when activeTab prop changes
-  React.useEffect(() => {
-    setCurrentTab(activeTab);
-  }, [activeTab]);
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'overview':
+        return <AssessmentOverview />;
+      case 'project-snapshot':
+        return <ProjectSnapshot />;
+      case 'success-criteria':
+        return <SuccessCriteria activeTab={activeTab} onTabChange={onTabChange} showNavigation={false} />;
+      case 'findings':
+        return <CriticalFindings />;
+      case 'recommendations':
+        return <KeyRecommendations activeTab={activeTab} onTabChange={onTabChange} />;
+      default:
+        return <AssessmentOverview />;
+    }
+  };
 
   return (
     <div className="space-y-6">
-      <div className="border-b">
-        <nav className="flex space-x-8" aria-label="Tabs">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => onTabChange(tab.id)}
-              className={`
-                py-4 px-1 border-b-2 font-medium text-sm
-                ${activeTab === tab.id
-                  ? 'border-blue-500 text-blue-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }
-              `}
-            >
-              {tab.title}
-            </button>
-          ))}
-        </nav>
-      </div>
-
-      <div>
-        {currentTab === 'overview' && <AssessmentOverview />}
-        {currentTab === 'project-summary' && <ProjectSummaryPage />}
-        {currentTab === 'findings' && <CriticalFindings />}
-        {currentTab === 'recommendations' && <KeyRecommendations showNavigation={false} />}
-      </div>
+      {showNavigation && (
+        <div className="border-b">
+          <nav className="flex space-x-8" aria-label="Tabs">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => onTabChange(tab.id)}
+                className={`
+                  border-b-2 py-4 px-1 text-sm font-medium
+                  ${activeTab === tab.id
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}
+                `}
+              >
+                {tab.title}
+              </button>
+            ))}
+          </nav>
+        </div>
+      )}
+      {renderContent()}
     </div>
   );
 };

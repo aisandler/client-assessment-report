@@ -51,6 +51,8 @@ const KeyRecommendations: React.FC<KeyRecommendationsProps> = ({
 }) => {
   const tabs = [
     { id: 'overview', title: 'Assessment Overview' },
+    { id: 'project-snapshot', title: 'Project Snapshot' },
+    { id: 'success-criteria', title: 'Success Criteria' },
     { id: 'findings', title: 'Critical Findings' },
     { id: 'recommendations', title: 'Key Recommendations' }
   ];

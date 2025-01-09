@@ -26,8 +26,8 @@ export const AssessmentOverview = () => {
       borderColor: "border-l-purple-500"
     },
     {
-      metric: "Digital Properties",
-      value: "12+",
+      metric: "Digital Ecosystem Assessment",
+      value: "5 Brands",
       icon: ClipboardCheck,
       description: "Websites, marketplaces, and platforms evaluated",
       gradient: "from-indigo-50 to-blue-50",
