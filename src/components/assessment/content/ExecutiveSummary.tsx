@@ -19,17 +19,17 @@ const ExecutiveSummary: React.FC<ExecutiveSummaryProps> = ({
   const renderContent = () => {
     switch (activeTab) {
       case 'overview':
-        return <AssessmentOverview />;
+        return <AssessmentOverview activeTab={activeTab} onTabChange={onTabChange} />;
       case 'project-snapshot':
-        return <ProjectSnapshot />;
+        return <ProjectSnapshot activeTab={activeTab} onTabChange={onTabChange} />;
       case 'success-criteria':
         return <SuccessCriteria activeTab={activeTab} onTabChange={onTabChange} showNavigation={false} />;
       case 'findings':
-        return <CriticalFindings />;
+        return <CriticalFindings activeTab={activeTab} onTabChange={onTabChange} />;
       case 'recommendations':
         return <KeyRecommendations activeTab={activeTab} onTabChange={onTabChange} />;
       default:
-        return <AssessmentOverview />;
+        return <AssessmentOverview activeTab={activeTab} onTabChange={onTabChange} />;
     }
   };
 

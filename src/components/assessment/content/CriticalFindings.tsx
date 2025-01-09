@@ -2,7 +2,15 @@ import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '../../../components/ui/card';
 import { AlertTriangle, TrendingDown, Zap, Target, Layers, BarChart, Settings, Users } from 'lucide-react';
 
-export const CriticalFindings: React.FC = () => {
+interface CriticalFindingsProps {
+  activeTab: string;
+  onTabChange: (tab: string) => void;
+}
+
+const CriticalFindings: React.FC<CriticalFindingsProps> = ({
+  activeTab,
+  onTabChange
+}) => {
   const findings = [
     {
       title: "Agency Partnership & Performance",

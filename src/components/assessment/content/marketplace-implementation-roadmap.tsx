@@ -2,7 +2,17 @@ import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Clock, ArrowRight, CheckCircle2, Milestone, Users } from 'lucide-react';
 
-const MarketplaceRoadmap = () => {
+interface MarketplaceImplementationRoadmapProps {
+  activeTab: string;
+  onTabChange: (tab: string) => void;
+  showNavigation: boolean;
+}
+
+const MarketplaceImplementationRoadmap: React.FC<MarketplaceImplementationRoadmapProps> = ({
+  activeTab,
+  onTabChange,
+  showNavigation
+}) => {
   const implementationPhases = {
     immediate: {
       title: "Immediate Actions",
@@ -187,4 +197,4 @@ const MarketplaceRoadmap = () => {
   );
 };
 
-export default MarketplaceRoadmap;
+export default MarketplaceImplementationRoadmap;

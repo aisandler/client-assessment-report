@@ -2,7 +2,15 @@ import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Calendar, TrendingUp, Users, FileText, Check, Clock, Hourglass } from 'lucide-react';
 
-const ProjectSnapshot = () => {
+interface ProjectSnapshotProps {
+  activeTab: string;
+  onTabChange: (tab: string) => void;
+}
+
+const ProjectSnapshot: React.FC<ProjectSnapshotProps> = ({
+  activeTab,
+  onTabChange
+}) => {
   const projectTimeline = [
     { 
       phase: 'Digital Maturity Assessment',

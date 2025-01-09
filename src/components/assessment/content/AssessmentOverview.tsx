@@ -5,7 +5,15 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { RichTextEditor } from '../../common/RichTextEditor';
 
-export const AssessmentOverview = () => {
+interface AssessmentOverviewProps {
+  activeTab: string;
+  onTabChange: (tab: string) => void;
+}
+
+const AssessmentOverview: React.FC<AssessmentOverviewProps> = ({
+  activeTab,
+  onTabChange
+}) => {
   const activityMetrics = [
     {
       metric: "Stakeholder Sessions",

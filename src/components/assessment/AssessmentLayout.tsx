@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AgencyImplementationRoadmap from './content/agency-implementation-roadmap';
 import ExecutiveSummary from './content/ExecutiveSummary';
 import KeyRecommendations from './content/key-recommendations';
@@ -12,7 +12,11 @@ import MarketplaceInsight from './content/marketplace-insight';
 import MarketplaceComponents from './content/marketplace-components';
 import MarketplaceImplementationRoadmap from './content/marketplace-implementation-roadmap';
 import InternalImplementationRoadmap from './content/internal-implementation-roadmap';
-import { ChevronDown, ChevronRight } from 'lucide-react';
+import { ChevronDown, ChevronRight, ChevronLeft } from 'lucide-react';
+import SalesOverview from './content/sales-overview';
+import SalesEnablement from './content/sales-enablement';
+import SalesImplementationRoadmap from './content/sales-implementation-roadmap';
+import CriticalFindings from './content/CriticalFindings';
 
 // Start with simplified navigation
 const navigation = [
@@ -20,11 +24,11 @@ const navigation = [
     title: "Executive Summary",
     id: "executive-summary",
     children: [
-      { title: "Assessment Overview", id: "overview" },
+      { title: "Overview", id: "overview" },
       { title: "Project Snapshot", id: "project-snapshot" },
       { title: "Success Criteria", id: "success-criteria" },
-      { title: "Critical Findings", id: "findings" },
-      { title: "Key Recommendations", id: "recommendations" }
+      { title: "Critical Findings", id: "critical-findings" },
+      { title: "Key Recommendations", id: "key-recommendations" }
     ]
   },
   {
@@ -60,20 +64,39 @@ const navigation = [
       { title: "Components", id: "marketplace-components" },
       { title: "Implementation Roadmap", id: "marketplace-implementation-roadmap" }
     ]
+  },
+  {
+    title: "Sales Assessment",
+    id: "sales-assessment",
+    children: [
+      { title: "Overview", id: "sales-overview" },
+      { title: "Sales Enablement", id: "sales-enablement" },
+      { title: "Implementation Roadmap", id: "sales-implementation-roadmap" }
+    ]
   }
 ];
 
 const AssessmentLayout: React.FC = () => {
-  const [activeSection, setActiveSection] = useState('overview');
+  const [activeTab, setActiveTab] = useState('overview');
   const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
     'executive-summary': true,
     'internal-assessment': true,
     'agency-assessment': true,
-    'marketplace-assessment': true
+    'marketplace-assessment': true,
+    'sales-assessment': true
   });
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
 
-  const handleNavClick = (sectionId: string) => {
-    setActiveSection(sectionId);
+  useEffect(() => {
+    // Get the content area element
+    const contentArea = document.querySelector('.content-area');
+    if (contentArea) {
+      contentArea.scrollTop = 0;
+    }
+  }, [activeTab]); // This will run whenever activeTab changes
+
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
   };
 
   const handleSectionClick = (section: any) => {
@@ -82,8 +105,11 @@ const AssessmentLayout: React.FC = () => {
     
     // Only navigate if we're expanding a collapsed section
     if (isCollapsed) {
-      const firstChildId = section.children[0].id;
-      handleNavClick(firstChildId);
+      // Add null check for children array
+      const firstChildId = section.children?.[0]?.id;
+      if (firstChildId) {
+        handleTabChange(firstChildId);
+      }
     }
     
     // Toggle section expansion
@@ -94,15 +120,16 @@ const AssessmentLayout: React.FC = () => {
   };
 
   const renderContent = () => {
-    console.log('Current activeSection:', activeSection);
-    switch (activeSection) {
+    console.log('Current activeSection:', activeTab);
+    switch (activeTab) {
       case 'overview':
       case 'project-snapshot':
       case 'success-criteria':
-      case 'findings':
-        return <ExecutiveSummary activeTab={activeSection} onTabChange={handleNavClick} />;
-      case 'recommendations':
-        return <KeyRecommendations activeTab={activeSection} onTabChange={handleNavClick} />;
+        return <ExecutiveSummary activeTab={activeTab} onTabChange={handleTabChange} />;
+      case 'critical-findings':
+        return <CriticalFindings activeTab={activeTab} onTabChange={handleTabChange} />;
+      case 'key-recommendations':
+        return <KeyRecommendations activeTab={activeTab} onTabChange={handleTabChange} />;
       case 'internal':
         return <InternalAssessment />;
       case 'internal-implementation-roadmap':
@@ -120,22 +147,53 @@ const AssessmentLayout: React.FC = () => {
       case 'marketplace-overview':
         return <MarketplaceInsight />;
       case 'marketplace-components':
-        return <MarketplaceComponents />;
+        return (
+          <MarketplaceComponents 
+            activeTab={activeTab}
+            onTabChange={handleTabChange}
+            showNavigation={true}
+          />
+        );
       case 'marketplace-implementation-roadmap':
-        return <MarketplaceImplementationRoadmap />;
+        return (
+          <MarketplaceImplementationRoadmap 
+            activeTab={activeTab}
+            onTabChange={handleTabChange}
+            showNavigation={true}
+          />
+        );
       case 'agency-implementation-roadmap':
         return <AgencyImplementationRoadmap />;
+      case 'sales-overview':
+        return <SalesOverview activeTab={activeTab} onTabChange={handleTabChange} showNavigation={true} />;
+      case 'sales-enablement':
+        return <SalesEnablement activeTab={activeTab} onTabChange={handleTabChange} showNavigation={true} />;
+      case 'sales-implementation-roadmap':
+        return <SalesImplementationRoadmap activeTab={activeTab} onTabChange={handleTabChange} showNavigation={true} />;
       default:
-        console.log('Hit default case with section:', activeSection);
+        console.log('Hit default case with section:', activeTab);
         return null;
     }
   };
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <div className="flex flex-col h-screen">
-      {/* Header */}
       <header className="flex items-center justify-between px-6 py-4 border-b">
         <div className="flex items-center gap-3">
+          <button
+            onClick={toggleSidebar}
+            className="p-2 rounded-lg hover:bg-gray-100"
+          >
+            {isSidebarOpen ? (
+              <ChevronLeft className="h-5 w-5" />
+            ) : (
+              <ChevronRight className="h-5 w-5" />
+            )}
+          </button>
           <Image
             src="/econoco-logo.png"
             alt="Econoco"
@@ -153,19 +211,23 @@ const AssessmentLayout: React.FC = () => {
         </div>
       </header>
 
-      {/* Main Content */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Navigation Sidebar */}
-        <div className="w-64 border-r bg-gray-50 overflow-y-auto">
+        <div 
+          className={`
+            transition-all duration-300 ease-in-out
+            border-r bg-gray-50 overflow-y-auto
+            ${isSidebarOpen ? 'w-64' : 'w-0'}
+          `}
+        >
           {navigation.map((section) => (
             <div key={section.id} className="py-2">
               <button
                 onClick={() => handleSectionClick(section)}
-                className={`w-full px-4 py-2 flex items-center justify-between hover:bg-gray-100 ${
-                  section.children.some(child => 
-                    child.id === activeSection || 
-                    child.children?.some(subChild => subChild.id === activeSection)
-                  ) ? 'bg-gray-100' : ''
+                className={`w-full px-4 py-2 flex items-center justify-between hover:${
+                  section.children?.some(child => 
+                    child.id === activeTab || 
+                    child.children?.some(subChild => subChild.id === activeTab)
+                  ) ?? false ? 'bg-gray-100' : ''
                 }`}
               >
                 <span className="font-medium text-gray-700">{section.title}</span>
@@ -177,14 +239,14 @@ const AssessmentLayout: React.FC = () => {
               </button>
               {expandedSections[section.id] && (
                 <div className="ml-4">
-                  {section.children.map((item) => (
+                  {section.children?.map((item) => (
                     <div key={item.id}>
                       {item.children ? (
                         <>
                           <button
-                            onClick={() => handleNavClick(item.id)}
+                            onClick={() => handleTabChange(item.id)}
                             className={`w-full text-left px-4 py-2 text-sm ${
-                              activeSection === item.id
+                              activeTab === item.id
                                 ? 'bg-blue-50 text-blue-600'
                                 : 'text-gray-600 hover:bg-gray-50'
                             }`}
@@ -195,9 +257,9 @@ const AssessmentLayout: React.FC = () => {
                             {item.children.map((subItem) => (
                               <button
                                 key={subItem.id}
-                                onClick={() => handleNavClick(subItem.id)}
+                                onClick={() => handleTabChange(subItem.id)}
                                 className={`w-full text-left px-4 py-2 text-sm ${
-                                  activeSection === subItem.id
+                                  activeTab === subItem.id
                                     ? 'bg-blue-50 text-blue-600'
                                     : 'text-gray-600 hover:bg-gray-50'
                                 }`}
@@ -209,9 +271,9 @@ const AssessmentLayout: React.FC = () => {
                         </>
                       ) : (
                         <button
-                          onClick={() => handleNavClick(item.id)}
+                          onClick={() => handleTabChange(item.id)}
                           className={`w-full text-left px-4 py-2 text-sm ${
-                            activeSection === item.id
+                            activeTab === item.id
                               ? 'bg-blue-50 text-blue-600'
                               : 'text-gray-600 hover:bg-gray-50'
                           }`}
@@ -227,8 +289,7 @@ const AssessmentLayout: React.FC = () => {
           ))}
         </div>
 
-        {/* Content Area */}
-        <div className="flex-1 overflow-auto p-6">
+        <div className="flex-1 overflow-auto p-6 content-area">
           {renderContent()}
         </div>
       </div>

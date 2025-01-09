@@ -57,6 +57,12 @@ const KeyRecommendations: React.FC<KeyRecommendationsProps> = ({
     { id: 'recommendations', title: 'Key Recommendations' }
   ];
 
+  const handleTabChange = (tabId: string) => {
+    if (onTabChange) {
+      onTabChange(tabId);
+    }
+  };
+
   // Render different content based on activeTab
   const renderTabContent = () => {
     switch (activeTab) {
@@ -299,7 +305,7 @@ const KeyRecommendations: React.FC<KeyRecommendationsProps> = ({
             {tabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => onTabChange(tab.id)}
+                onClick={() => handleTabChange(tab.id)}
                 className={`
                   py-4 px-1 border-b-2 font-medium text-sm
                   ${activeTab === tab.id
