@@ -126,27 +126,6 @@ const SuccessCriteria: React.FC<SuccessCriteriaProps> = ({
 
   return (
     <div className="space-y-12">
-      {showNavigation && (
-        <div className="border-b">
-          <nav className="flex space-x-8" aria-label="Tabs">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => onTabChange(tab.id)}
-                className={`
-                  border-b-2 py-4 px-1 text-sm font-medium
-                  ${activeTab === tab.id
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}
-                `}
-              >
-                {tab.title}
-              </button>
-            ))}
-          </nav>
-        </div>
-      )}
-
       <Card className="border-t-4 border-t-blue-600">
         <CardHeader className="bg-gradient-to-r from-gray-50 to-white border-b">
           <CardTitle className="flex items-center justify-between">

@@ -3,7 +3,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { AlertTriangle, DollarSign, BarChart2, Activity } from 'lucide-react';
 import { RichTextEditor } from '@/components/ui/rich-text-editor';
 
-const ServiceDeliveryAssessment = () => {
+const ServiceDeliveryAssessment: React.FC = () => {
   const serviceInvestment = [
     {
       service: 'Media Management',
