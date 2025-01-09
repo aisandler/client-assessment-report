@@ -1,13 +1,13 @@
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Store, TrendingDown, AlertTriangle, BarChart2, Users, Settings, Search, Layout } from 'lucide-react';
+import { Store, TrendingDown, AlertTriangle, Layout, Users, Search } from 'lucide-react';
 
 const MarketplaceInsightDashboard = () => {
   return (
     <div className="space-y-8">
       {/* Executive Overview Section */}
-      <Card>
-        <CardHeader className="border-b bg-gradient-to-r from-gray-50 to-white">
+      <Card className="border-t-4 border-t-blue-600">
+        <CardHeader className="bg-gradient-to-r from-gray-50 to-white border-b">
           <CardTitle className="flex items-center">
             <Store className="text-blue-600 mr-2" />
             Marketplace Strategic Assessment
@@ -16,9 +16,9 @@ const MarketplaceInsightDashboard = () => {
         <CardContent className="p-6">
           <div className="prose max-w-none mb-6">
             <p className="text-gray-600 text-lg">
-              Analysis reveals significant revenue opportunities being constrained by operational 
-              inefficiencies and fragmented channel management. Critical gaps in content development 
-              and partner management require immediate attention to unlock marketplace growth potential.
+              A comprehensive analysis reveals a fragmented approach to channel management 
+              with significant untapped revenue potential. Critical operational inefficiencies 
+              and strategic gaps are constraining marketplace performance across multiple platforms.
             </p>
           </div>
 
@@ -59,12 +59,25 @@ const MarketplaceInsightDashboard = () => {
               <div className="mt-2 text-sm text-yellow-600">vs 12-20% industry standard</div>
             </div>
           </div>
+
+          <div className="bg-blue-50 p-4 rounded-lg">
+            <h4 className="font-medium text-blue-900 mb-2">Strategic Implications</h4>
+            <div className="text-blue-800">
+              The current marketplace strategy reveals critical opportunities for revenue 
+              optimization through three key strategic interventions:
+              <ul className="list-disc pl-5 mt-2 space-y-1 text-blue-800">
+                <li>Restructure partner management approaches</li>
+                <li>Develop systematic content creation capabilities</li>
+                <li>Implement cross-platform optimization strategies</li>
+              </ul>
+            </div>
+          </div>
         </CardContent>
       </Card>
 
-      {/* Amazon Deep Dive */}
-      <Card>
-        <CardHeader className="border-b bg-gradient-to-r from-gray-50 to-white">
+      {/* Amazon Vendor Central Deep Dive */}
+      <Card className="border-t-4 border-t-blue-600">
+        <CardHeader className="bg-gradient-to-r from-gray-50 to-white border-b">
           <CardTitle className="flex items-center">
             <Layout className="text-blue-600 mr-2" />
             Amazon Vendor Central Analysis
@@ -73,7 +86,7 @@ const MarketplaceInsightDashboard = () => {
         <CardContent className="p-6">
           <div className="grid grid-cols-2 gap-8">
             <div>
-              <h3 className="text-lg font-semibold mb-4">Revenue Distribution</h3>
+              <h3 className="text-lg font-semibold mb-4">Revenue Concentration Dynamics</h3>
               <div className="bg-gray-50 p-4 rounded-lg mb-4">
                 <div className="mb-4">
                   <div className="flex justify-between mb-2">
@@ -97,10 +110,10 @@ const MarketplaceInsightDashboard = () => {
               
               <div className="prose max-w-none">
                 <p className="text-gray-600">
-                  The high revenue concentration in just 10 products indicates both risk and untapped 
-                  potential across the broader catalog. This concentration stems from operational 
-                  constraints in content development and technical documentation, limiting the 
-                  performance of the wider product range.
+                  Managing approximately 1,000 active ASINs, the platform exhibits a highly 
+                  concentrated revenue distribution where just 10 products generate 65-70% of total revenue. 
+                  This concentration signals both significant risk and untapped potential across the 
+                  broader product catalog.
                 </p>
               </div>
             </div>
@@ -134,18 +147,22 @@ const MarketplaceInsightDashboard = () => {
           </div>
 
           <div className="mt-6 bg-blue-50 p-4 rounded-lg">
-            <h4 className="font-medium text-blue-900 mb-2">Strategic Implications</h4>
+            <h4 className="font-medium text-blue-900 mb-2">Operational Optimization Pathway</h4>
             <div className="text-blue-800">
-              The current state suggests immediate opportunities for revenue optimization through 
-              improved content development, pricing strategy alignment, and technical documentation. 
-              Addressing these gaps could unlock significant value across the broader product catalog.
+              Strategic priorities for Amazon channel improvement:
+              <ul className="list-disc pl-5 mt-2 space-y-1 text-blue-800">
+                <li>Develop comprehensive content development capabilities</li>
+                <li>Implement dynamic pricing strategy</li>
+                <li>Enhance technical documentation processes</li>
+                <li>Diversify revenue across product catalog</li>
+              </ul>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Partner Assessment */}
-      <Card>
+      <Card className="border-t-4 border-t-blue-600">
         <CardHeader className="border-b bg-gradient-to-r from-gray-50 to-white">
           <CardTitle className="flex items-center">
             <Users className="text-blue-600 mr-2" />
@@ -258,6 +275,19 @@ const MarketplaceInsightDashboard = () => {
                   performance and customer satisfaction metrics.
                 </p>
               </div>
+            </div>
+          </div>
+
+          <div className="mt-6 bg-blue-50 p-4 rounded-lg">
+            <h4 className="font-medium text-blue-900 mb-2">Partner Management Recommendations</h4>
+            <div className="text-blue-800">
+              Key strategic interventions for partnership optimization:
+              <ul className="list-disc pl-5 mt-2 space-y-1 text-blue-800">
+                <li>Renegotiate partnership contracts with clear performance metrics</li>
+                <li>Develop comprehensive content and quality control capabilities</li>
+                <li>Implement strategic performance reporting frameworks</li>
+                <li>Create cross-platform optimization strategies</li>
+              </ul>
             </div>
           </div>
         </CardContent>
