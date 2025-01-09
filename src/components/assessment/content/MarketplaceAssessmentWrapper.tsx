@@ -1,28 +1,25 @@
 import React, { useState } from 'react';
-import AssessmentOverview from './AssessmentOverview';
-import CriticalFindings from './CriticalFindings';
-import ProjectSummaryPage from './project-summary';
-import KeyRecommendations from './key-recommendations';
+import MarketplaceInsight from './marketplace-insight';
+import MarketplaceComponents from './marketplace-components';
+import MarketplaceImplementationRoadmap from './marketplace-implementation-roadmap';
 
-interface ExecutiveSummaryProps {
+interface MarketplaceAssessmentWrapperProps {
   activeTab: string;
   onTabChange: (tabId: string) => void;
 }
 
-const ExecutiveSummary: React.FC<ExecutiveSummaryProps> = ({ 
-  activeTab = 'overview',
+const MarketplaceAssessmentWrapper: React.FC<MarketplaceAssessmentWrapperProps> = ({ 
+  activeTab = 'marketplace-overview',
   onTabChange 
 }) => {
   const tabs = [
-    { id: 'overview', title: 'Assessment Overview' },
-    { id: 'project-summary', title: 'Project Summary' },
-    { id: 'findings', title: 'Critical Findings' },
-    { id: 'recommendations', title: 'Key Recommendations' }
+    { id: 'marketplace-overview', title: 'Overview' },
+    { id: 'marketplace-components', title: 'Components' },
+    { id: 'marketplace-implementation-roadmap', title: 'Implementation Roadmap' }
   ];
 
   const [currentTab, setCurrentTab] = useState(activeTab);
 
-  // Update currentTab when activeTab prop changes
   React.useEffect(() => {
     setCurrentTab(activeTab);
   }, [activeTab]);
@@ -50,13 +47,12 @@ const ExecutiveSummary: React.FC<ExecutiveSummaryProps> = ({
       </div>
 
       <div>
-        {currentTab === 'overview' && <AssessmentOverview />}
-        {currentTab === 'project-summary' && <ProjectSummaryPage />}
-        {currentTab === 'findings' && <CriticalFindings />}
-        {currentTab === 'recommendations' && <KeyRecommendations showNavigation={false} />}
+        {currentTab === 'marketplace-overview' && <MarketplaceInsight />}
+        {currentTab === 'marketplace-components' && <MarketplaceComponents />}
+        {currentTab === 'marketplace-implementation-roadmap' && <MarketplaceImplementationRoadmap />}
       </div>
     </div>
   );
 };
 
-export default ExecutiveSummary; 
+export default MarketplaceAssessmentWrapper; 

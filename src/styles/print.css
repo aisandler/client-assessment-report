@@ -1,0 +1,40 @@
+@media print {
+  @page {
+    margin: 2cm;
+  }
+
+  body {
+    font-size: 12pt;
+  }
+
+  h1 {
+    font-size: 24pt;
+    margin-bottom: 1cm;
+  }
+
+  h2 {
+    font-size: 18pt;
+    margin-top: 1cm;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  table {
+    page-break-inside: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+  }
+
+  .page-break {
+    page-break-before: always;
+  }
+} 

@@ -1,28 +1,23 @@
 import React, { useState } from 'react';
-import AssessmentOverview from './AssessmentOverview';
-import CriticalFindings from './CriticalFindings';
-import ProjectSummaryPage from './project-summary';
-import KeyRecommendations from './key-recommendations';
+import InternalAssessment from './internal-assessment';
+import InternalImplementationRoadmap from './internal-implementation-roadmap';
 
-interface ExecutiveSummaryProps {
+interface InternalAssessmentWrapperProps {
   activeTab: string;
   onTabChange: (tabId: string) => void;
 }
 
-const ExecutiveSummary: React.FC<ExecutiveSummaryProps> = ({ 
-  activeTab = 'overview',
+const InternalAssessmentWrapper: React.FC<InternalAssessmentWrapperProps> = ({ 
+  activeTab = 'internal',
   onTabChange 
 }) => {
   const tabs = [
-    { id: 'overview', title: 'Assessment Overview' },
-    { id: 'project-summary', title: 'Project Summary' },
-    { id: 'findings', title: 'Critical Findings' },
-    { id: 'recommendations', title: 'Key Recommendations' }
+    { id: 'internal', title: 'Internal Assessment' },
+    { id: 'internal-implementation-roadmap', title: 'Implementation Roadmap' }
   ];
 
   const [currentTab, setCurrentTab] = useState(activeTab);
 
-  // Update currentTab when activeTab prop changes
   React.useEffect(() => {
     setCurrentTab(activeTab);
   }, [activeTab]);
@@ -50,13 +45,11 @@ const ExecutiveSummary: React.FC<ExecutiveSummaryProps> = ({
       </div>
 
       <div>
-        {currentTab === 'overview' && <AssessmentOverview />}
-        {currentTab === 'project-summary' && <ProjectSummaryPage />}
-        {currentTab === 'findings' && <CriticalFindings />}
-        {currentTab === 'recommendations' && <KeyRecommendations showNavigation={false} />}
+        {currentTab === 'internal' && <InternalAssessment />}
+        {currentTab === 'internal-implementation-roadmap' && <InternalImplementationRoadmap />}
       </div>
     </div>
   );
 };
 
-export default ExecutiveSummary; 
+export default InternalAssessmentWrapper; 
