@@ -160,21 +160,6 @@ const ServiceDeliveryAssessment = () => {
               <li>Basic service delivery despite premium pricing structure</li>
             </ul>
           </div>
-
-          <div className="space-y-4">
-            <CardTitle className="text-2xl font-semibold">
-              <RichTextEditor 
-                initialContent="Digital Marketing Maturity Assessment"
-                className="text-2xl font-semibold"
-                sectionId="overview-title"
-              />
-            </CardTitle>
-            <RichTextEditor 
-              initialContent="Establishing the foundation for transforming Econoco&apos;s digital marketing capabilities in 2025"
-              className="text-lg text-gray-600 mt-2"
-              sectionId="assessment-overview"
-            />
-          </div>
         </CardContent>
       </Card>
     </div>

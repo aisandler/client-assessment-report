@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AgencyImplementationRoadmap from './content/agency-implementation-roadmap';
 import ExecutiveSummary from './content/ExecutiveSummary';
 import KeyRecommendations from './content/key-recommendations';
 import ServiceDeliveryAssessment from './content/service-delivery-assessment';
@@ -7,6 +8,11 @@ import PerformanceAnalysis from './content/performance-analysis';
 import CommunicationAssessment from './content/communication-assessment';
 import InternalAssessment from './content/internal-assessment';
 import Image from 'next/image';
+import MarketplaceInsight from './content/marketplace-insight';
+import MarketplaceComponents from './content/marketplace-components';
+import MarketplaceImplementationRoadmap from './content/marketplace-implementation-roadmap';
+import InternalImplementationRoadmap from './content/internal-implementation-roadmap';
+import ProjectSummaryPage from './content/project-summary';
 
 // Start with simplified navigation
 const navigation = [
@@ -15,6 +21,7 @@ const navigation = [
     id: "executive-summary",
     children: [
       { title: "Assessment Overview", id: "overview" },
+      { title: "Project Summary", id: "project-summary" },
       { title: "Critical Findings", id: "findings" },
       { title: "Key Recommendations", id: "recommendations" }
     ]
@@ -23,7 +30,8 @@ const navigation = [
     title: "Internal Assessment",
     id: "internal-assessment",
     children: [
-      { title: "Internal Assessment", id: "internal" }
+      { title: "Internal Assessment", id: "internal" },
+      { title: "Implementation Roadmap", id: "internal-implementation-roadmap" }
     ]
   },
   {
@@ -39,12 +47,22 @@ const navigation = [
         ]
       },
       { title: "Performance Analysis", id: "performance" },
-      { title: "Communication", id: "communication" }
+      { title: "Communication", id: "communication" },
+      { title: "Implementation Roadmap", id: "agency-implementation-roadmap" }
+    ]
+  },
+  {
+    title: "Marketplace Assessment",
+    id: "marketplace-assessment",
+    children: [
+      { title: "Overview", id: "marketplace-overview" },
+      { title: "Components", id: "marketplace-components" },
+      { title: "Implementation Roadmap", id: "marketplace-implementation-roadmap" }
     ]
   }
 ];
 
-export const AssessmentLayout = () => {
+const AssessmentLayout: React.FC = () => {
   const [activeSection, setActiveSection] = useState('overview');
 
   const handleNavClick = (sectionId: string) => {
@@ -55,12 +73,18 @@ export const AssessmentLayout = () => {
     console.log('Current activeSection:', activeSection);
     switch (activeSection) {
       case 'overview':
+        return <ExecutiveSummary />;
+      case 'project-summary':
+        return <ProjectSummaryPage />;
       case 'findings':
         return <ExecutiveSummary activeTab={activeSection} onTabChange={handleNavClick} />;
       case 'recommendations':
         return <KeyRecommendations activeTab={activeSection} onTabChange={handleNavClick} />;
       case 'internal':
         return <InternalAssessment />;
+      case 'internal-implementation-roadmap':
+        console.log('About to render InternalImplementationRoadmap');
+        return <InternalImplementationRoadmap />;
       case 'service-delivery':
         return <ServiceDeliveryAssessment />;
       case 'service-delivery-detail':
@@ -70,7 +94,16 @@ export const AssessmentLayout = () => {
       case 'communication':
         console.log('Rendering CommunicationAssessment');
         return <CommunicationAssessment />;
+      case 'marketplace-overview':
+        return <MarketplaceInsight />;
+      case 'marketplace-components':
+        return <MarketplaceComponents />;
+      case 'marketplace-implementation-roadmap':
+        return <MarketplaceImplementationRoadmap />;
+      case 'agency-implementation-roadmap':
+        return <AgencyImplementationRoadmap />;
       default:
+        console.log('Hit default case with section:', activeSection);
         return null;
     }
   };
