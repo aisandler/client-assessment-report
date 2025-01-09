@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Layout, Layers, ArrowRight, AlertTriangle } from 'lucide-react';
 
-const MarketplaceExpansion = () => {
+const MarketplaceComponents = () => {
   const marketplaceComparison = {
     amazon: {
       name: "Amazon Vendor Central",
@@ -197,4 +197,4 @@ const MarketplaceExpansion = () => {
   );
 };
 
-export default MarketplaceExpansion;
+export default MarketplaceComponents;

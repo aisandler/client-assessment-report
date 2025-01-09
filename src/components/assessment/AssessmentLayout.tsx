@@ -10,6 +10,7 @@ import Image from 'next/image';
 import InternalImplementationRoadmap from './content/internal-implementation-roadmap';
 import AgencyImplementationRoadmap from './content/agency-implementation-roadmap';
 import MarketplaceImplementationRoadmap from './content/marketplace-implementation-roadmap';
+import MarketplaceComponents from './content/marketplace-components';
 
 // Updated navigation to include Project Snapshot
 const navigation = [
@@ -54,6 +55,7 @@ const navigation = [
     id: "marketplace-assessment",
     children: [
       { title: "Overview", id: "marketplace" },
+      { title: "Marketplace Components", id: "marketplace-components" },
       { title: "Implementation Roadmap", id: "marketplace-implementation-roadmap" }
     ]
   }
@@ -91,7 +93,9 @@ export const AssessmentLayout = () => {
       case 'agency-implementation-roadmap':
         return <AgencyImplementationRoadmap />;
       case 'marketplace':
-        return <MarketplaceAssessment />;
+        return <MarketplaceComponents />;
+      case 'marketplace-components':
+        return <MarketplaceComponents />;
       case 'marketplace-implementation-roadmap':
         return <MarketplaceImplementationRoadmap />;
       default:
