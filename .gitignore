@@ -3,6 +3,3 @@ node_modules
 .env
 .env.local
 .DS_Store
-backup_assessment_report/
-new_assessment_report/
-.vercel
