@@ -13,7 +13,7 @@ const ProjectSnapshot: React.FC<ProjectSnapshotProps> = ({
 }) => {
   const projectTimeline = [
     { 
-      phase: 'Digital Maturity Assessment',
+      phase: 'Digital Maturity Assessmentccc',
       start: 'December 1, 2024',
       end: 'January 10, 2025',
       status: 'Complete'
