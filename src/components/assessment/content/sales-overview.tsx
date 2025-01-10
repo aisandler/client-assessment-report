@@ -124,95 +124,96 @@ const SalesOverview: React.FC<SalesOverviewProps> = ({
   };
 
   return (
-    <div className="space-y-8">
-      {/* Executive Overview */}
-      <Card className="border-t-4 border-t-blue-600">
-        <CardHeader className="bg-gradient-to-r from-gray-50 to-white border-b">
-          <CardTitle className="flex items-center">
-            <AlertOctagon className="text-blue-600 mr-2" />
-            Critical Findings Overview
+    <div className="space-y-6">
+      <Card className="border border-gray-200 border-t-4 border-t-blue-500 shadow-sm">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-2xl font-semibold text-gray-900">
+            Sales Assessment Overview
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-6">
-          <div className="prose max-w-none mb-6">
-            <p className="text-gray-600 text-lg">
+        <CardContent className="pt-0">
+          <div className="prose max-w-none">
+            <p className="text-gray-600 text-lg leading-relaxed">
               A comprehensive assessment reveals critical strategic gaps across digital marketing, 
               technology integration, and brand management. These findings highlight significant 
               opportunities for operational optimization and revenue enhancement.
             </p>
           </div>
-
-          <div className="grid grid-cols-2 gap-6 mb-6">
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-blue-600 font-medium">Critical Findings</span>
-                <AlertTriangle className="h-4 w-4 text-blue-600" />
-              </div>
-              <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold text-blue-900">2</span>
-                <span className="text-sm text-blue-700">CRITICAL</span>
-              </div>
-              <div className="mt-2 text-sm text-blue-600">Immediate Action Required</div>
-            </div>
-
-            <div className="bg-yellow-50 p-4 rounded-lg">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-yellow-600 font-medium">High Priority</span>
-                <BarChart className="h-4 w-4 text-yellow-600" />
-              </div>
-              <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold text-yellow-900">2</span>
-                <span className="text-sm text-yellow-700">Findings</span>
-              </div>
-              <div className="mt-2 text-sm text-yellow-600">Strategic Optimization Needed</div>
-            </div>
-          </div>
         </CardContent>
       </Card>
 
-      {/* Critical Findings Detailed View */}
+      <div className="grid grid-cols-2 gap-4">
+        <Card className="bg-blue-50 border border-gray-200 border-t-4 border-t-blue-500 shadow-sm">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm text-blue-600 font-medium">Critical Findings</span>
+              <AlertTriangle className="h-4 w-4 text-blue-600" />
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-bold text-blue-900">2</span>
+              <span className="text-sm text-blue-700">CRITICAL</span>
+            </div>
+            <div className="mt-2 text-sm text-blue-600">Immediate Action Required</div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-yellow-50 border border-gray-200 border-t-4 border-t-blue-500 shadow-sm">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm text-yellow-600 font-medium">High Priority</span>
+              <BarChart className="h-4 w-4 text-yellow-600" />
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-bold text-yellow-900">2</span>
+              <span className="text-sm text-yellow-700">Findings</span>
+            </div>
+            <div className="mt-2 text-sm text-yellow-600">Strategic Optimization Needed</div>
+          </CardContent>
+        </Card>
+      </div>
+
       {criticalFindings.map((finding) => (
         <Card 
           key={finding.id} 
-          className={`border-t-4 ${getPriorityClasses(finding.priority).container}`}
+          className="border border-gray-200 border-t-4 border-t-blue-500 shadow-sm hover:shadow-md transition-shadow duration-200"
         >
-          <CardHeader className="bg-gradient-to-r from-gray-50 to-white border-b">
+          <CardHeader className="bg-gradient-to-r from-gray-50 to-white border-b py-4">
             <CardTitle className="flex items-center justify-between">
               <div className="flex items-center">
-                <finding.icon className="text-blue-600 mr-2" />
-                {finding.title}
+                <finding.icon className="text-blue-600 mr-2 h-5 w-5" />
+                <span className="text-lg font-medium">{finding.title}</span>
               </div>
               <span className={`px-3 py-1 rounded-full text-xs font-medium ${getPriorityClasses(finding.priority).badge}`}>
                 {finding.priority}
               </span>
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-6">
-            <div className="prose max-w-none mb-4">
+          <CardContent className="p-5">
+            <div className="space-y-4">
               <p className="text-gray-600">{finding.description}</p>
-            </div>
 
-            <div className="bg-white border border-gray-200 rounded-lg p-4 mb-4">
-              <h4 className="font-semibold mb-2">Key Challenges</h4>
-              <ul className="list-disc pl-5 space-y-1 text-gray-700">
-                {finding.details.map((detail, index) => (
-                  <li key={index}>{detail}</li>
-                ))}
-              </ul>
-            </div>
+              <div className="bg-white border border-gray-100 rounded-lg p-4">
+                <h4 className="font-medium mb-2 text-gray-900">Key Challenges</h4>
+                <ul className="list-disc pl-5 space-y-1 text-gray-700">
+                  {finding.details.map((detail, index) => (
+                    <li key={index}>{detail}</li>
+                  ))}
+                </ul>
+              </div>
 
-            <div className="bg-gray-50 p-4 rounded-lg mb-4">
-              <h4 className="font-semibold text-gray-800 mb-2">Business Impact</h4>
-              <p className="text-gray-700">{finding.impact}</p>
-            </div>
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h4 className="font-medium text-gray-900 mb-2">Business Impact</h4>
+                <p className="text-gray-700">{finding.impact}</p>
+              </div>
 
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <h4 className="font-semibold text-blue-900 mb-2">Recommended Actions</h4>
-              <ul className="list-disc pl-5 space-y-1 text-blue-800">
-                {finding.recommendations.map((rec, index) => (
-                  <li key={index}>{rec}</li>
-                ))}
-              </ul>
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <h4 className="font-medium text-blue-900 mb-2">Recommended Actions</h4>
+                <ul className="list-disc pl-5 space-y-1 text-blue-800">
+                  {finding.recommendations.map((rec, index) => (
+                    <li key={index}>{rec}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </CardContent>
         </Card>

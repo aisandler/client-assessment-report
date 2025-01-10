@@ -1,160 +1,146 @@
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { PieChart, BarChart2, AlertTriangle, Search, Calendar, TrendingDown } from 'lucide-react';
+import { Search, Calendar, BarChart, AlertTriangle, Clock } from 'lucide-react';
 
-const PerformanceAnalysis = () => {
-  const campaignPerformance = [
-    {
-      channel: 'Branded Search',
-      icon: Search,
-      currentApproach: 'Aggressive bidding on brand terms',
-      performanceImpact: '32x ROAS indicating organic cannibalization',
-      revenueImplication: 'Estimated $72,000 annual inefficient spend',
-      severity: 'critical'
-    },
-    {
-      channel: 'Non-Brand Search',
-      icon: Search,
-      currentApproach: 'Basic keyword targeting',
-      performanceImpact: 'Limited new customer acquisition',
-      revenueImplication: 'Reduced market growth',
-      severity: 'warning'
-    },
-    {
-      channel: 'Weekend Campaigns',
-      icon: Calendar,
-      currentApproach: 'Campaigns inactive',
-      performanceImpact: '28.5% reduction in weekly exposure',
-      revenueImplication: 'Lost revenue opportunities',
-      severity: 'critical'
-    }
-  ];
+interface PerformanceAnalysisProps {
+  activeTab?: string;
+  onTabChange?: (tab: string) => void;
+  showNavigation?: boolean;
+}
 
-  const budgetUtilization = [
-    {
-      area: 'Media Spend',
-      allocation: 162600,
-      delivery: 'Basic campaign maintenance',
-      gap: 'Limited strategic growth',
-      icon: BarChart2
-    },
-    {
-      area: 'SEO Investment',
-      allocation: 156000,
-      delivery: 'Maintenance-level activity',
-      gap: 'Missing revenue opportunities',
-      icon: Search
-    },
-    {
-      area: 'Development Budget',
-      allocation: 84000,
-      delivery: 'Basic platform updates',
-      gap: 'Limited innovation delivery',
-      icon: PieChart
-    }
-  ];
-
-  const totalBudget = budgetUtilization.reduce((sum, item) => sum + item.allocation, 0);
-
-  const getSeverityColor = (severity) => {
-    switch(severity) {
-      case 'critical':
-        return 'bg-red-50 border-l-4 border-red-500';
-      case 'warning':
-        return 'bg-yellow-50 border-l-4 border-yellow-500';
-      default:
-        return 'bg-gray-50';
-    }
-  };
-
+const PerformanceAnalysis: React.FC<PerformanceAnalysisProps> = ({
+  activeTab,
+  onTabChange,
+  showNavigation = true
+}) => {
   return (
-    <div className="space-y-8">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <TrendingDown className="text-red-500 mr-2" />
+    <div className="space-y-6">
+      <Card className="border !border-gray-200 !border-t-4 !border-t-blue-500 shadow-sm">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-2xl font-semibold text-gray-900">
             Performance Analysis
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="prose max-w-none mb-6">
-            <p className="text-gray-600">
-              Our analysis reveals significant concerns regarding campaign effectiveness, return on 
-              investment, and strategic execution. The agency&apos;s approach demonstrates inefficient 
-              spending coupled with limited strategic innovation.
-            </p>
-          </div>
+        <CardContent className="pt-0">
+          <p className="text-gray-600 text-lg">
+            Our analysis reveals significant concerns regarding campaign effectiveness, return on investment, and strategic execution. The agency's approach demonstrates inefficient spending coupled with limited strategic innovation.
+          </p>
+        </CardContent>
+      </Card>
 
-          {/* Campaign Performance Section */}
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold mb-4">Campaign Performance Assessment</h3>
-            <div className="space-y-4">
-              {campaignPerformance.map((item, index) => (
-                <div 
-                  key={index} 
-                  className={`p-4 rounded-lg ${getSeverityColor(item.severity)}`}
-                >
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0">
-                      <item.icon className={`h-5 w-5 ${
-                        item.severity === 'critical' ? 'text-red-600' : 'text-yellow-600'
-                      }`} />
-                    </div>
-                    <div className="ml-4 flex-grow grid grid-cols-3 gap-4">
-                      <div>
-                        <div className="font-medium text-gray-900">{item.channel}</div>
-                        <div className="text-sm text-gray-600">{item.currentApproach}</div>
-                      </div>
-                      <div>
-                        <div className="font-medium text-gray-900">Performance Impact</div>
-                        <div className="text-sm text-gray-600">{item.performanceImpact}</div>
-                      </div>
-                      <div>
-                        <div className="font-medium text-gray-900">Revenue Implication</div>
-                        <div className="text-sm text-gray-600">{item.revenueImplication}</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Budget Utilization Section */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Budget Utilization & ROI</h3>
-            <div className="grid grid-cols-3 gap-6 mb-6">
-              {budgetUtilization.map((item, index) => (
-                <div key={index} className="bg-gray-50 rounded-lg p-4">
-                  <div className="flex items-center mb-2">
-                    <item.icon className="h-5 w-5 text-blue-600 mr-2" />
-                    <h4 className="font-medium">{item.area}</h4>
-                  </div>
-                  <div className="text-2xl font-bold text-gray-900 mb-2">
-                    ${item.allocation.toLocaleString()}
-                  </div>
-                  <div className="h-2 bg-gray-200 rounded mb-2">
-                    <div 
-                      className="h-2 bg-blue-600 rounded"
-                      style={{ width: `${(item.allocation / totalBudget) * 100}%` }}
-                    ></div>
-                  </div>
-                  <div className="text-sm text-gray-600 mb-1">{item.delivery}</div>
-                  <div className="text-sm text-red-600">{item.gap}</div>
-                </div>
-              ))}
-            </div>
-
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <div className="flex items-center mb-2">
-                <AlertTriangle className="text-yellow-600 mr-2" />
-                <h4 className="font-medium">Critical Budget Optimization Gaps</h4>
+      <div>
+        <h2 className="text-xl font-semibold mb-4">Campaign Performance Assessment</h2>
+        <div className="space-y-2">
+          <div className="bg-red-50 p-4 rounded flex items-start">
+            <Search className="h-5 w-5 text-red-600 mt-1 mr-4" />
+            <div className="grid grid-cols-3 flex-1 gap-4">
+              <div>
+                <h3 className="font-medium">Branded Search</h3>
+                <p className="text-gray-600 text-sm">Aggressive bidding on brand terms</p>
               </div>
-              <p className="text-gray-600 text-sm">
-                Current spending patterns reveal a concerning focus on maintaining basic campaign 
-                operations rather than driving performance improvements or exploring new opportunities.
-              </p>
+              <div>
+                <h3 className="font-medium">Performance Impact</h3>
+                <p className="text-gray-600 text-sm">32x ROAS indicating organic cannibalization</p>
+              </div>
+              <div>
+                <h3 className="font-medium">Revenue Implication</h3>
+                <p className="text-gray-600 text-sm">Estimated $72,000 annual inefficient spend</p>
+              </div>
             </div>
+          </div>
+
+          <div className="bg-yellow-50 p-4 rounded flex items-start">
+            <Search className="h-5 w-5 text-yellow-600 mt-1 mr-4" />
+            <div className="grid grid-cols-3 flex-1 gap-4">
+              <div>
+                <h3 className="font-medium">Non-Brand Search</h3>
+                <p className="text-gray-600 text-sm">Basic keyword targeting</p>
+              </div>
+              <div>
+                <h3 className="font-medium">Performance Impact</h3>
+                <p className="text-gray-600 text-sm">Limited new customer acquisition</p>
+              </div>
+              <div>
+                <h3 className="font-medium">Revenue Implication</h3>
+                <p className="text-gray-600 text-sm">Reduced market growth</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-red-50 p-4 rounded flex items-start">
+            <Calendar className="h-5 w-5 text-red-600 mt-1 mr-4" />
+            <div className="grid grid-cols-3 flex-1 gap-4">
+              <div>
+                <h3 className="font-medium">Weekend Campaigns</h3>
+                <p className="text-gray-600 text-sm">Campaigns inactive</p>
+              </div>
+              <div>
+                <h3 className="font-medium">Performance Impact</h3>
+                <p className="text-gray-600 text-sm">28.5% reduction in weekly exposure</p>
+              </div>
+              <div>
+                <h3 className="font-medium">Revenue Implication</h3>
+                <p className="text-gray-600 text-sm">Lost revenue opportunities</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <Card className="border !border-gray-200 !border-t-4 !border-t-blue-500 shadow-sm">
+        <CardHeader>
+          <CardTitle>Budget Utilization & ROI</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-3 gap-6">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <BarChart className="h-5 w-5 text-gray-600" />
+                <span className="font-medium">Media Spend</span>
+              </div>
+              <div className="text-2xl font-bold mb-2">$162,600</div>
+              <div className="h-2 bg-blue-100 rounded mb-2">
+                <div className="h-full w-3/4 bg-blue-500 rounded"></div>
+              </div>
+              <div className="text-gray-600 text-sm">Basic campaign maintenance</div>
+              <div className="text-red-600 text-sm">Limited strategic growth</div>
+            </div>
+
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <Search className="h-5 w-5 text-gray-600" />
+                <span className="font-medium">SEO Investment</span>
+              </div>
+              <div className="text-2xl font-bold mb-2">$156,000</div>
+              <div className="h-2 bg-blue-100 rounded mb-2">
+                <div className="h-full w-2/3 bg-blue-500 rounded"></div>
+              </div>
+              <div className="text-gray-600 text-sm">Maintenance-level activity</div>
+              <div className="text-red-600 text-sm">Missing revenue opportunities</div>
+            </div>
+
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <Clock className="h-5 w-5 text-gray-600" />
+                <span className="font-medium">Development Budget</span>
+              </div>
+              <div className="text-2xl font-bold mb-2">$84,000</div>
+              <div className="h-2 bg-blue-100 rounded mb-2">
+                <div className="h-full w-1/2 bg-blue-500 rounded"></div>
+              </div>
+              <div className="text-gray-600 text-sm">Basic platform updates</div>
+              <div className="text-red-600 text-sm">Limited innovation delivery</div>
+            </div>
+          </div>
+
+          <div className="mt-6">
+            <div className="flex items-center gap-2 mb-2">
+              <AlertTriangle className="h-5 w-5 text-yellow-600" />
+              <h3 className="font-medium">Critical Budget Optimization Gaps</h3>
+            </div>
+            <p className="text-gray-600">
+              Current spending patterns reveal a concerning focus on maintaining basic campaign operations rather than driving performance improvements or exploring new opportunities.
+            </p>
           </div>
         </CardContent>
       </Card>

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import AgencyImplementationRoadmap from './content/agency-implementation-roadmap';
 import ExecutiveSummary from './content/ExecutiveSummary';
 import KeyRecommendations from './content/key-recommendations';
@@ -18,8 +19,15 @@ import SalesEnablement from './content/sales-enablement';
 import SalesImplementationRoadmap from './content/sales-implementation-roadmap';
 import CriticalFindings from './content/CriticalFindings';
 
+// Add interface for navigation items
+interface NavigationItem {
+  title: string;
+  id: string;
+  children?: NavigationItem[];
+}
+
 // Start with simplified navigation
-const navigation = [
+const navigation: NavigationItem[] = [
   {
     title: "Executive Summary",
     id: "executive-summary",
@@ -43,14 +51,8 @@ const navigation = [
     title: "Agency Assessment",
     id: "agency-assessment",
     children: [
-      { 
-        title: "Service Delivery", 
-        id: "service-delivery",
-        children: [
-          { title: "Overview", id: "service-delivery" },
-          { title: "Service Delivery Detail", id: "service-delivery-detail" }
-        ]
-      },
+      { title: "Service Delivery Overview", id: "service-delivery" },
+      { title: "Service Delivery Detail", id: "service-delivery-detail" },
       { title: "Performance Analysis", id: "performance" },
       { title: "Communication", id: "communication" },
       { title: "Implementation Roadmap", id: "agency-implementation-roadmap" }
@@ -69,7 +71,7 @@ const navigation = [
     title: "Sales Assessment",
     id: "sales-assessment",
     children: [
-      { title: "Overview", id: "sales-overview" },
+      { title: "Sales Overview", id: "sales-overview" },
       { title: "Sales Enablement", id: "sales-enablement" },
       { title: "Implementation Roadmap", id: "sales-implementation-roadmap" }
     ]
@@ -95,9 +97,54 @@ const AssessmentLayout: React.FC = () => {
     }
   }, [activeTab]); // This will run whenever activeTab changes
 
+  const flattenNavigation = useCallback(() => {
+    return navigation.flatMap(section => 
+      section.children?.flatMap(item => {
+        if (item.children && item.children.length > 0) {
+          return [item, ...item.children];
+        }
+        return item;
+      }) || []
+    );
+  }, []);
+
+  const findCurrentIndex = useCallback(() => {
+    const flatNav = flattenNavigation();
+    return flatNav.findIndex(item => item.id === activeTab);
+  }, [activeTab, flattenNavigation]);
+
+  const navigatePages = useCallback((direction: 'prev' | 'next') => {
+    const flatNav = flattenNavigation();
+    const currentIndex = findCurrentIndex();
+    const newIndex = direction === 'next' 
+      ? Math.min(currentIndex + 1, flatNav.length - 1)
+      : Math.max(currentIndex - 1, 0);
+    
+    if (flatNav[newIndex]) {
+      handleTabChange(flatNav[newIndex].id);
+    }
+  }, [findCurrentIndex, flattenNavigation]);
+
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
   };
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      switch (event.key) {
+        case 'ArrowRight':
+          navigatePages('next');
+          break;
+        case 'ArrowLeft':
+          navigatePages('prev');
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [navigatePages]);
 
   const handleSectionClick = (section: any) => {
     // Check if section is currently collapsed
@@ -140,7 +187,8 @@ const AssessmentLayout: React.FC = () => {
       case 'service-delivery-detail':
         return <ServiceAnalysisDetail />;
       case 'performance':
-        return <PerformanceAnalysis />;
+        console.log('Rendering PerformanceAnalysis');
+        return <PerformanceAnalysis activeTab={activeTab} onTabChange={handleTabChange} showNavigation={true} />;
       case 'communication':
         console.log('Rendering CommunicationAssessment');
         return <CommunicationAssessment />;
@@ -176,8 +224,23 @@ const AssessmentLayout: React.FC = () => {
     }
   };
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
+  const getCurrentPath = () => {
+    // Reset path for each calculation
+    const path: { title: string; id: string }[] = [];
+    
+    // Find the current section and item
+    for (const section of navigation) {
+      const currentItem = section.children?.find(item => item.id === activeTab);
+      
+      if (currentItem) {
+        // We found the matching item, add both section and item to path
+        path.push({ title: section.title, id: section.id });
+        path.push({ title: currentItem.title, id: currentItem.id });
+        break; // Exit loop once we've found our path
+      }
+    }
+
+    return path;
   };
 
   return (
@@ -185,7 +248,7 @@ const AssessmentLayout: React.FC = () => {
       <header className="flex items-center justify-between px-6 py-4 border-b">
         <div className="flex items-center gap-3">
           <button
-            onClick={toggleSidebar}
+            onClick={() => setSidebarOpen(!isSidebarOpen)}
             className="p-2 rounded-lg hover:bg-gray-100"
           >
             {isSidebarOpen ? (
@@ -289,8 +352,47 @@ const AssessmentLayout: React.FC = () => {
           ))}
         </div>
 
-        <div className="flex-1 overflow-auto p-6 content-area">
-          {renderContent()}
+        <div className="flex-1 overflow-auto relative">
+          <div className="sticky top-0 bg-white/95 backdrop-blur-sm border-b z-10">
+            <div className="px-6 py-3 flex items-center gap-2 text-sm">
+              {getCurrentPath().map((item, index) => (
+                <React.Fragment key={item.id}>
+                  {index > 0 && (
+                    <ChevronRight className="h-4 w-4 text-gray-400" />
+                  )}
+                  <span className={
+                    index === getCurrentPath().length - 1 
+                      ? "font-medium text-gray-900"
+                      : "text-gray-500"
+                  }>
+                    {item.title}
+                  </span>
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+
+          <div className="p-6">
+            {renderContent()}
+          </div>
+          
+          {/* Navigation buttons */}
+          <div className="fixed bottom-8 right-8 flex gap-2">
+            <button
+              onClick={() => navigatePages('prev')}
+              className="p-2 bg-white rounded-full shadow-lg hover:bg-gray-50 transition-colors"
+              disabled={findCurrentIndex() === 0}
+            >
+              <ChevronLeft className="h-6 w-6 text-gray-600" />
+            </button>
+            <button
+              onClick={() => navigatePages('next')}
+              className="p-2 bg-white rounded-full shadow-lg hover:bg-gray-50 transition-colors"
+              disabled={findCurrentIndex() === navigation.flatMap(s => s.children).length - 1}
+            >
+              <ChevronRight className="h-6 w-6 text-gray-600" />
+            </button>
+          </div>
         </div>
       </div>
     </div>
